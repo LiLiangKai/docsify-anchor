@@ -36,7 +36,7 @@
   }
 
   function style () {
-    var code = "#anchor-navigation{position:fixed;top:100px;right:0;z-index: 1;font-size: 12px;line-height: 1.8em;padding:40px 15px 10px;max-width:170px;max-height: 350px;overflow-y:auto;} #anchor-navigation a {color: #999;text-decoration: none;transition:color .3s ease-in-out;} .anchor-navigation{position:relative;transition:.3s ease-in-out;width:100%} .anchor-navigation.is-hidden{right:-120%;} #anchor-navigation a.is-active,#anchor-navigation a:hover{color:#42b983} .anchor-navigation-toggle{position: absolute;width: 30px;height: 30px;top: 0;right: 15px;background: #fff;border: 1px solid #ddd;border-radius: 3px;cursor: pointer;line-height: 28px;text-align: center;font-size: 12px;color: #999;transition:all .3s ease-in-out} .anchor-navigation-toggle:hover{color:#42b983;border-color:#42b983} .anchor-nav {white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}"
+    var code = "#anchor-navigation{position:fixed;top:100px;right:0;z-index: 1;font-size: 12px;line-height: 1.8em;padding:40px 15px 10px;max-width:170px;max-height: 350px;overflow-y:auto;} #anchor-navigation a {color: #999;text-decoration: none;transition:color .3s ease-in-out;} .anchor-navigation{position:relative;transition:.3s ease-in-out;width:100%} .anchor-navigation.is-hidden{right:-120%;} #anchor-navigation a.is-active,#anchor-navigation a:hover{color:#666} .anchor-navigation-toggle{position: absolute;width: 30px;height: 30px;top: 0;right: 15px;background: #fff;border: 1px solid #ddd;border-radius: 3px;cursor: pointer;line-height: 28px;text-align: center;font-size: 12px;color: #999;transition:all .3s ease-in-out} .anchor-navigation-toggle:hover{color:#666;border-color:#666} .anchor-nav {white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}"
     Docsify.dom.style( code )
   }
 
@@ -93,16 +93,21 @@
     }
     if ( !curTree ) return
     updateAnchor( curTree, curPath )
+    if ( !curTree.length || curTree.length < config.display ) {
+      anchorDomWrap && ( anchorDomWrap.style.display = 'none' )
+    } else {
+      anchorDomWrap && ( anchorDomWrap.style.display = 'block' )
+    }
   }
 
   var CONFIG = {
-    // display: 3 // 指定存在多少章节时出现锚点导航
+    display: 3 // 指定存在多少章节时出现锚点导航
   }
 
   var install = function ( hook, vm ) {
-    // var anchorConfig = vm.config.anchor || {}
+    var anchorConfig = vm.config.anchor || {}
     var opts = {
-      // display: anchorConfig.display || CONFIG.display
+      display: anchorConfig.display || CONFIG.display
     }
 
     hook.init( function () {
