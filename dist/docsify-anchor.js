@@ -36,7 +36,7 @@
   }
 
   function style () {
-    var code = "#anchor-navigation{position:fixed;top:100px;right:0;z-index: 1;font-size: 12px;line-height: 1.8em;padding:40px 15px 10px;max-width:170px;max-height: 350px;overflow-y:auto;} #anchor-navigation a {color: #999;text-decoration: none;transition:color .3s ease-in-out;} .anchor-navigation{position:relative;transition:.3s ease-in-out;width:100%} .anchor-navigation.is-hidden{right:-120%;} #anchor-navigation a.is-active,#anchor-navigation a:hover{color:#666} .anchor-navigation-toggle{position: absolute;width: 30px;height: 30px;top: 0;right: 15px;background: #fff;border: 1px solid #ddd;border-radius: 3px;cursor: pointer;line-height: 28px;text-align: center;font-size: 12px;color: #999;transition:all .3s ease-in-out} .anchor-navigation-toggle:hover{color:#666;border-color:#666} .anchor-nav {white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}"
+    var code = "#anchor-navigation{position:fixed;top:100px;right:0;z-index: 1;font-size: 12px;line-height: 1.8em;padding:40px 15px 10px;max-width:170px;max-height: 350px;overflow-y:auto;} #anchor-navigation a {color: #999;text-decoration: none;transition:color .3s ease-in-out;} .anchor-navigation{position:relative;transition:.3s ease-in-out;width:100%} .anchor-navigation.is-hidden{right:-120%;} #anchor-navigation a.is-active,#anchor-navigation a:hover{color:#333} .anchor-navigation-toggle{position: absolute;width: 30px;height: 30px;top: 0;right: 15px;background: #fff;border: 1px solid #ddd;border-radius: 3px;cursor: pointer;line-height: 28px;text-align: center;font-size: 12px;color: #999;transition:all .3s ease-in-out} .anchor-navigation-toggle:hover{color:#666;border-color:#666} .anchor-nav {white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}"
     Docsify.dom.style( code )
   }
 
@@ -69,9 +69,22 @@
       }
     }, false )
 
+    window.addEventListener( 'hashchange', handleHashChange )
+
     anchorDomWrap.appendChild( anchorDom )
     anchorDomWrap.appendChild( anchorToggle )
     document.body.appendChild( anchorDomWrap )
+  }
+
+  var handleHashChange = function () {
+    var hash = window.location.hash
+    anchorDom.querySelectorAll( 'a' ).forEach( function ( child ) {
+      if ( child.getAttribute( 'href' ) == hash ) {
+        child.classList.add( 'is-active' )
+      } else {
+        child.classList.remove( 'is-active' )
+      }
+    } )
   }
 
   var update = function ( config, vm ) {
